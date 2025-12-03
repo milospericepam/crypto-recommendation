@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crypto-recommendations
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crypto-recommendations
+  template:
+    metadata:
+      labels:
+        app: crypto-recommendations
+    spec:
+      containers:
+        - name: crypto-recommendations
+          image: crypto-recommendations:latest
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crypto-recommendations
+spec:
+  type: ClusterIP
+  selector:
+    app: crypto-recommendations
+  ports:
+    - port: 8080
+      targetPort: 8080

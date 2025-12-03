@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: crypto-recommendations-ingress
+  namespace: k8s-program
+  annotations:
+    nginx.ingress.kubernetes.io/limit-connections: "10"
+    nginx.ingress.kubernetes.io/limit-rpm: "60"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: api.yourcompany.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: crypto-recommendations
+                port:
+                  number: 8080
